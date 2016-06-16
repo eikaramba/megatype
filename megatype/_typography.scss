@@ -47,46 +47,6 @@
     }
 
     html {
-        $min-size: nth($sizes, 1);
-        $max-size: nth($sizes, 2);
-        $min-width: break-get(nth($breaks, 2), start) / 2;
-        $max-width: break-get(nth($breaks, 2), start);
-
-        font-size: $min-size / 16px * 100%;
-
-        @if ($baseline-scaling == true) {
-            @media screen and (min-width: px-to-em(break-get(nth($breaks, 2), start) / 2)) {
-                font-size: calc(#{$min-size} + #{no-unit($max-size) - no-unit($min-size)} * (100vw - #{$min-width}) / #{no-unit($max-width) - no-unit($min-width)});
-            }
-        }
-
-        // Loop through breakpoints.
-        @for $i from 2 through $breakpoint-count {
-            @include min-width($i - 1) {
-                $min-size: nth($sizes, $i);
-                $min-width: break-get(nth($breaks, $i), start);
-
-                font-size: $min-size / 16px * 100%;
-
-                @if ($baseline-scaling == true) {
-                    @if $i < $breakpoint-count {
-                        $max-size: nth($sizes, $i + 1);
-                        $max-width: break-get(nth($breaks, $i + 1), start);
-                    } @else {
-                        // largest breakpoint. Keep the scaling consitent with the previous breakpoint
-                        $size-diff: nth($sizes, $i) - nth($sizes, $i - 1);
-                        $width-diff: break-get(nth($breaks, $i), start) - break-get(nth($breaks, $i - 1), start);
-                        $max-size: nth($sizes, $i) + $size-diff;
-                        $max-width: break-get(nth($breaks, $i), start) + $width-diff;
-                    }
-
-                    font-size: calc(#{$min-size} + #{no-unit($max-size) - no-unit($min-size)} * (100vw - #{$min-width}) / #{no-unit($max-width) - no-unit($min-width)});
-                }
-            }
-        }
-    }
-
-    html {
         @include debug-rootsize($sizes);
     }
 }
@@ -227,9 +187,9 @@
     // we have to correct for a bug with the way webkit renders unitless line height :(
     // It computes line height to the correct value but often when rendered to the screen it rounds 1px incorrectly.
     // See: https://bugs.webkit.org/show_bug.cgi?id=155286
-    @media screen and (-webkit-min-device-pixel-ratio:0) {
-        line-height: px-to-rem($lineheight);
-    }
+    //@media screen and (-webkit-min-device-pixel-ratio:0) {
+    //    line-height: px-to-rem($lineheight);
+    //}
 
     // store a unitless value for calulating offsets later
     $lh-calc: no-unit($lineheight);
