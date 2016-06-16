@@ -76,7 +76,6 @@
 @mixin breakpoint-layout($min: -1, $max: -1) {
     //@if map-has-key($breakpoint-map, $min) {
         // make current breakpoint context available in global scope
-    @debug "#{$min} #{$max}";
         @if $min == -1 {
             $current-breakpoint: $max !global;
             $current-rootsize: break-get($max, rootsize) !global;
@@ -86,7 +85,6 @@
         }
 
         @if $current-breakpoint == xl and $max == xl {
-            @debug "just output content";
             @content;
         } @else {
             $minw: none;
@@ -100,17 +98,14 @@
             }
 
             @if $min != -1 and $max != -1 {
-                @debug "case1";
                 @include media($minw, $maxw) {
                     @content;
                 }
             } @else if $min != -1 {
-                @debug "case2";
                 @include media($minw) {
                     @content;
                 }
             } @else if $max != -1 {
-                @debug "case3";
                 @include media(-1, $maxw) {
                     @content;
                 }
